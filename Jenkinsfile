@@ -4,7 +4,9 @@ pipeline {
 	stages {
 		stage( 'GIT Clone' ) {
 			steps {
-				echo 'Clonando repositório...'
+				sh "if [ -d \"agenda2/\" ]; then rm -r agenda2/; fi"
+				sh "git clone https://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@github.com/italoherbert/agenda2.git"
+				echo 'Repositório clonado com sucesso...'
 			}
 		}
 
