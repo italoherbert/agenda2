@@ -22,12 +22,12 @@ pipeline {
 
 		stage( 'Build e push docker image' ) {			
 			steps {
-				dir( 'agenda2' ) {
-					container( 'docker' ) {
+				container( 'docker' ) {
+					dir( 'agenda2' ) {
 						sh "docker build -t agenda:v10 ."
-						sh "docker tag agenda:v10 italoherbert/agenda:latest"
+						sh "docker tag agenda:v10 italoherbert/agenda:latest"					
+						echo 'Imagem construída.'
 					}
-					echo 'Imagem construída.'
 				}
 			}
 		}
