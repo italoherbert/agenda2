@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  java:
+    image: openjdk:latest
+  agenda-app:
+    depends_on:
+      - java
+    image: agenda:v1
+    volumes:
+      - webdir:/opt/agenda
+    ports:
+      - "8080:8080"
+    restart: always
+    
+volumes:
+  webdir: {}
+      
+  

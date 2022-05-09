@@ -1,0 +1,18 @@
+
+spring:
+  application:
+    name: agenda
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${HOST}:${PORT}/${DB}
+    username: ${USERNAME}
+    password: ${PASSWORD} 
+    hikari:
+      auto-commit: false   
+  jpa: 
+    hibernate:            
+      ddl-auto: create    
+    generate-ddl: true
+    show-sql: true
+    
+server:  port: 8080      

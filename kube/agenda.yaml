@@ -1,0 +1,62 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agenda
+spec:
+  selector:
+    app: agenda
+  ports:
+  - protocol: "TCP"
+    port: 8080
+    targetPort: 8080
+    nodePort: 30000
+  type: LoadBalancer
+  
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agenda
+spec:
+  selector:
+    matchLabels:
+      app: agenda
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: agenda
+    spec:
+      containers:
+        - name: agenda
+          image: agenda:v8
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: HOST
+              value: localhost
+            - name: DB            
+              value: agenda
+            - name: PORT
+              value: "5432"
+            - name: USERNAME
+              value: italo
+            - name: PASSWORD
+              value: italo
+          ports:        
+            - containerPort: 8080
+        - name: postgresql-server-container
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: data-volume
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: postgresql-pvc
