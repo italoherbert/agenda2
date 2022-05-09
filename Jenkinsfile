@@ -13,7 +13,7 @@ pipeline {
 		stage( 'Compile e package' ) {
 			steps {
 				dir( 'agenda2' ) {
-					sh './mvnw -DskipTests clean package'
+					sh 'mvnw -DskipTests clean package'
 					echo 'Aplicação compilada e empacotada.'
 				}
 			}
