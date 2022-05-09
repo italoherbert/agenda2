@@ -26,25 +26,20 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: jenkins
-  strategy:
-    type: Recreate
+      app: jenkins  
   template:
     metadata:
       labels:
         app: jenkins
     spec:
       containers:
-        - image: jenkins/jenkins:lts
-          name: jenkins
-          env:
-            - name: JENKINS_USER
-              value: root
+        - image: jenkins/jenkins:jdk17-preview
+          name: jenkins          
           ports:
             - containerPort: 8080
           volumeMounts:
             - name: jenkins-volume
-              mountPath: /var/jenkins_home
+              mountPath: /var/jenkins_home        
       volumes:
         - name: jenkins-volume
           emptyDir : {}

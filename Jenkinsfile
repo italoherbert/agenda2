@@ -23,7 +23,8 @@ pipeline {
 		stage( 'Build docker image' ) {
 			steps {
 				dir( 'agenda2' ) {
-					echo 'Construindo imagem docker'
+					sh "docker build -t agenda:v10 ."
+					echo 'Imagem construída.'
 				}
 			}
 		}
