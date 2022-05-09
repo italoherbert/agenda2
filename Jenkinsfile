@@ -23,7 +23,7 @@ pipeline {
 		stage( 'Build e push docker image' ) {
 			agent {
 				docker {
-					image alpine:latest
+					image 'alpine:latest'
 				}
 			}
 			steps {
