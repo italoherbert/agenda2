@@ -20,10 +20,16 @@ pipeline {
 			}
 		}
 
-		stage( 'Build docker image' ) {
+		stage( 'Build e push docker image' ) {
+			agent {
+				docker {
+					image : alpine:latest
+				}
+			}
 			steps {
 				dir( 'agenda2' ) {
 					sh "docker build -t agenda:v10 ."
+					sh "docker tag agenda:v10 italoherbert/agenda:latest"
 					echo 'Imagem construída.'
 				}
 			}
