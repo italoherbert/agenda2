@@ -13,6 +13,7 @@ pipeline {
 		stage( 'Compile e package' ) {
 			steps {
 				dir( 'agenda2' ) {
+					sh "chmod 777 mvnw"
 					sh "./mvnw clean package -DskipTests"
 					echo 'Aplicação compilada e empacotada.'
 				}
