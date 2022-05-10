@@ -7,9 +7,7 @@ pipeline {
 				script {
 					def dockerHome = tool 'JenkinsDocker'	
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
-				}
-				sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
-				sh 'chmod u+x ./kubectl'
+				}				
 			}			
 		}
 	
@@ -59,6 +57,8 @@ pipeline {
 			steps {
 				dir( 'agenda2' ) {
 					withKubeConfig([credentialsId: 'kubernetes-secret-key']) {						  
+						sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+						sh 'chmod u+x ./kubectl'
 						sh './kubectl get pods'
 					}
 				}
