@@ -2,15 +2,15 @@ pipeline {
 	agent any
 	
 	stages {
-		stage( 'Inicializacao' ) {			
-			/*
+		stage( 'Inicializacao' ) {						
 			steps {
+				/*
 				script {
 					def dockerHome = tool 'JenkinsDocker'	
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
 				}
-			}
-			*/
+				*/
+			}			
 		}
 	
 		stage( 'GIT Clone' ) {
