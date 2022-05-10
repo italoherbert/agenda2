@@ -2,12 +2,14 @@ pipeline {
 	agent any
 	
 	stages {
-		stage( 'Inicializacao' ) {						
+		stage( 'Inicialização' ) {						
 			steps {
 				script {
 					def dockerHome = tool 'JenkinsDocker'	
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
 				}
+				sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+				sh 'chmod u+x ./kubectl'
 			}			
 		}
 	
@@ -56,9 +58,7 @@ pipeline {
 		stage( 'Implantação no kubernetes' ) {
 			steps {
 				dir( 'agenda2' ) {
-					withKubeConfig([credentialsId: 'kubernetes-secret-key', serverUrl: 'https://127.0.0.1:62251']) {
-						sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
-						sh 'chmod u+x ./kubectl'  
+					withKubeConfig([credentialsId: 'kubernetes-secret-key']) {						  
 						sh './kubectl get pods'
 					}
 				}
