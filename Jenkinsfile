@@ -3,9 +3,9 @@ pipeline {
 	
 	stages {
 		stage( 'Inicializacao' ) {
-			steps {
+			environment {
 				def dockerHome = tool 'JenkinsDocker'
-				env.PATH = "${dockerHome}/bin:${env.PATH}"
+				env.PATH = "${dockerHome}/bin:${env.PATH}"			
 			}
 		}
 	
