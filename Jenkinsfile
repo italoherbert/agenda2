@@ -2,10 +2,12 @@ pipeline {
 	agent any
 	
 	stages {
-		stage( 'Inicializacao' ) {
-			environment {
-				def dockerHome = tool 'JenkinsDocker'	
-				PATH = "${dockerHome}/bin:${env.PATH}"
+		stage( 'Inicializacao' ) {			
+			steps {
+				script {
+					def dockerHome = tool 'JenkinsDocker'	
+					env.PATH = "${dockerHome}/bin:${env.PATH}"
+				}
 			}
 		}
 	
