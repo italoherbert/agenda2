@@ -32,14 +32,23 @@ spec:
       labels:
         app: jenkins
     spec:
-      containers:
+      securityContext:
+        runAsUser: 0
+      containers:        
         - image: jenkins/jenkins:jdk17-preview
-          name: jenkins          
+          name: jenkins  
+          securityContext:
+            privileged: true        
           ports:
             - containerPort: 8080
           volumeMounts:
             - name: jenkins-volume
               mountPath: /var/jenkins_home 
+            - name: docker-sock-volume
+              mountPath: /var/run/docker.sock          
       volumes:
         - name: jenkins-volume
           emptyDir : {}
+        - name: docker-sock-volume
+          hostPath:
+            path: /var/run/docker.sock
