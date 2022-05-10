@@ -33,7 +33,7 @@ pipeline {
 		stage( 'Build docker image' ) {			
 			steps {
 				dir( 'agenda2' ) {
-					sh "docker build -t italoherbert/agenda:latest"
+					sh "docker build -t italoherbert/agenda:latest ."
 				}
 			}
 		}
