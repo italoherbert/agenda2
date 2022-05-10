@@ -10,6 +10,7 @@ pipeline {
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
 				}
 				*/
+				echo 'Iniciou com sucesso!'
 			}			
 		}
 	
