@@ -2,6 +2,11 @@ pipeline {
 	agent any
 	
 	stages {
+		stage( 'Inicialização' ) {
+			def dockerHome = tool 'JenkinsDocker'
+			env.PATH = "${dockerHome}/bin:${env.PATH}"
+		}
+	
 		stage( 'GIT Clone' ) {
 			steps {
 				sh "if [ -d \"agenda2/\" ]; then rm -r agenda2/; fi"
