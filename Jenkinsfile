@@ -43,7 +43,7 @@ pipeline {
 				DOCKER_HUB_CREDENCIAIS = credentials( 'docker-hub' )
 			}
 			steps {
-				sh "echo $DOCKER_HUB_CREDENCIAIS_PSW | docker login -u $DOCKER_HUB_CREDENCIAIS_USR --password-stdin"					
+				sh 'echo $DOCKER_HUB_CREDENCIAIS_PSW | docker login -u $DOCKER_HUB_CREDENCIAIS_USR --password-stdin'					
 			}
 		}
 		
