@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
         - name: agenda
-          image: agenda:v8
+          image: italoherbert/agenda:latest
           imagePullPolicy: IfNotPresent
           env:
             - name: HOST
