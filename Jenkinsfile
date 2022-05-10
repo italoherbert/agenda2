@@ -4,12 +4,10 @@ pipeline {
 	stages {
 		stage( 'Inicializacao' ) {						
 			steps {
-				/*
 				script {
 					def dockerHome = tool 'JenkinsDocker'	
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
 				}
-				*/
 				echo 'Iniciou com sucesso!'
 			}			
 		}
