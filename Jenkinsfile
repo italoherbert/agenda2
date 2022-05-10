@@ -3,8 +3,10 @@ pipeline {
 	
 	stages {
 		stage( 'Inicializacao' ) {
-			def dockerHome = tool 'JenkinsDocker'
-			env.PATH = "${dockerHome}/bin:${env.PATH}"
+			steps {
+				def dockerHome = tool 'JenkinsDocker'
+				env.PATH = "${dockerHome}/bin:${env.PATH}"
+			}
 		}
 	
 		stage( 'GIT Clone' ) {
