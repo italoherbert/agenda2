@@ -24,10 +24,10 @@ spring:
       sasl:
         mechanism: PLAIN
         jaas:
-          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="italo" password="italo"
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="italo" password="italo";
           
     producer:
-      bootstrap-servers: localhost:9092
+      bootstrap-servers: localhost:9093
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   
