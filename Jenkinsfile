@@ -64,7 +64,7 @@ pipeline {
 		stage( 'Implantação no kubernetes' ) {
 			steps {
 				dir( 'agenda2/kube' ) {
-					withKubeConfig([credentialsId: 'kubernetes']) {						  
+					withKubeConfig([credentialsId: 'client.key']) {						  
 						sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
 						sh 'chmod u+x ./kubectl'
 						sh './kubectl apply -f agenda-pessoa.yaml'
