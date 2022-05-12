@@ -3,6 +3,16 @@ spring:
     name: agenda-log  
   
   kafka:
+    jaas:
+      enabled: true
+    properties:
+      security:
+        protocol: SASL_PLAINTEXT
+      sasl:
+        mechanism: PLAIN
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="italo" password="italo" 
+     
     consumer:
       bootstrap-servers: localhost:9092
       group-id: group-id

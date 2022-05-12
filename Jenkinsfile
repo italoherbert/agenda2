@@ -1,8 +1,7 @@
 pipeline {
 	agent any
 	
-	stages {
-		/*
+	stages {		
 		stage( 'Inicialização' ) {						
 			steps {
 				script {
@@ -10,8 +9,7 @@ pipeline {
 					env.PATH = "${dockerHome}/bin:${env.PATH}"
 				}				
 			}			
-		}
-		*/
+		}		
 
 		stage( 'GIT Clone' ) {
 			environment {
@@ -66,7 +64,7 @@ pipeline {
 		stage( 'Implantação no kubernetes' ) {
 			steps {
 				dir( 'agenda2/kube' ) {
-					withKubeConfig([credentialsId: 'kubernetes-secret-key']) {						  
+					withKubeConfig([credentialsId: 'kubernetes']) {						  
 						sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
 						sh 'chmod u+x ./kubectl'
 						sh './kubectl apply -f agenda-pessoa.yaml'

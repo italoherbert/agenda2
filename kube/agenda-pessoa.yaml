@@ -1,4 +1,17 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: agenda
+  POSTGRES_USER: italo
+  POSTGRES_PASSWORD: italo
+
+---
+
+apiVersion: v1
 kind: Service
 metadata:
   name: agenda-pessoa
