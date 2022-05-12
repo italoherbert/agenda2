@@ -54,11 +54,10 @@ spec:
   selector:
     app: kafka
   ports:
-    - port: 9092
-      name: http
-      protocol : TCP
-      nodePort: 30100
+    - name: external
+      port: 30092
       targetPort: 9092
+      nodePort: 30092
 
 ---
 
