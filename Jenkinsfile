@@ -2,6 +2,7 @@ pipeline {
 	agent any
 	
 	stages {
+		/*
 		stage( 'Inicialização' ) {						
 			steps {
 				script {
@@ -10,7 +11,8 @@ pipeline {
 				}				
 			}			
 		}
-	
+		*/
+
 		stage( 'GIT Clone' ) {
 			environment {
 				GITHUB_CREDENCIAIS = credentials( 'github' )
@@ -23,7 +25,11 @@ pipeline {
 
 		stage( 'Compile e package' ) {
 			steps {
-				dir( 'agenda2' ) {
+				dir( 'agenda2/agenda-pessoa' ) {
+					sh "chmod 777 mvnw"
+					sh "./mvnw clean package -DskipTests"
+				}
+				dir( 'agenda2/agenda-log' ) {
 					sh "chmod 777 mvnw"
 					sh "./mvnw clean package -DskipTests"
 				}
@@ -32,8 +38,11 @@ pipeline {
 
 		stage( 'Build docker image' ) {			
 			steps {
-				dir( 'agenda2' ) {
-					sh "docker build -t italoherbert/agenda:latest ."
+				dir( 'agenda2/agenda-pessoa' ) {
+					sh "docker build -t italoherbert/agenda-pessoa:latest ."
+				}
+				dir( 'agenda2/agenda-log' ) {
+					sh "docker build -t italoherbert/agenda-log:latest ."
 				}
 			}
 		}
@@ -49,7 +58,8 @@ pipeline {
 		
 		stage( 'Docker image push' ) {
 			steps {
-				sh "docker push italoherbert/agenda:latest"
+				sh "docker push italoherbert/agenda-pessoa:latest"
+				sh "docker push italoherbert/agenda-log:latest"
 			}
 		}
 		
@@ -59,7 +69,8 @@ pipeline {
 					withKubeConfig([credentialsId: 'kubernetes-secret-key']) {						  
 						sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
 						sh 'chmod u+x ./kubectl'
-						sh './kubectl apply -f agenda.yaml'
+						sh './kubectl apply -f agenda-pessoa.yaml'
+						sh './kubectl apply -f agenda-log.yaml'
 						sh './kubectl get pods'
 					}
 				}

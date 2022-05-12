@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import italo.agenda.MSGs;
@@ -18,6 +20,12 @@ import italo.agenda.repository.PessoaRepository;
 public class PessoaService {
 
 	@Autowired
+	private KafkaTemplate<String, String> kafkaTemplate;
+		
+	@Value("${app.kafka.producer.topic}") 
+	private String pessoaTopic;
+	
+	@Autowired
 	private PessoaRepository pessoaRepository;
 	
 	public void inserePessoa( PessoaRequest request ) throws ServiceException {
@@ -30,6 +38,8 @@ public class PessoaService {
 		p.setNome( request.getNome() );
 		p.setEmail( request.getEmail() );
 		p.setSalario( Double.parseDouble( request.getSalario() ) );
+		
+		kafkaTemplate.send( pessoaTopic, "Nome="+p.getNome()+"; E-Mail="+p.getEmail()+"; Salário="+request.getSalario() );
 				
 		pessoaRepository.save( p );
 	}

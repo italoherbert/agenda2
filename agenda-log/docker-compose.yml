@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  java:
+    image: openjdk:latest
+  
+  postgresql:
+    image: postgres:latest
+    container_name: cpsql
+    environment:
+      POSTGRES_USER: italo
+      POSTGRES_PASSWORD: italo
+      POSTGRES_DB: agenda
+    ports:
+      - '5432:5432'    
+    networks:
+      - agenda  
+    volumes:
+      - db_data:/var/lib/postgresql  
+ 
+  agenda-app:
+    depends_on:
+      - java
+    build: .
+    environment:
+      HOST: cpsql
+      DB: agenda
+      PORT: 5432
+      USERNAME: italo
+      PASSWORD: italo
+    ports:
+      - "8080:8080"      
+    networks:
+      - agenda   
+    volumes:
+      - webdir:/opt/agenda    
+#    restart: always
+
+volumes:
+  webdir: {}
+  db_data: {}
+      
+networks:
+  agenda:
+  

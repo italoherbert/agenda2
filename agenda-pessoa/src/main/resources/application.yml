@@ -1,0 +1,29 @@
+
+spring:
+  application:
+    name: agenda-pessoa
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/agenda
+    username: italo
+    password: italo
+    hikari:
+      auto-commit: false   
+  jpa: 
+    hibernate:            
+      ddl-auto: update    
+    generate-ddl: true
+    show-sql: true
+  
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  
+app:
+  kafka:
+    producer:
+      topic: example-topic
+    
+server:  port: 8080      

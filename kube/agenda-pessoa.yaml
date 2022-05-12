@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: agenda
+  name: agenda-pessoa
 spec:
   selector:
-    app: agenda
+    app: agenda-pessoa
   ports:
   - protocol: "TCP"
     port: 8080
@@ -17,36 +17,28 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: agenda
+  name: agenda-pessoa
 spec:
   selector:
     matchLabels:
-      app: agenda
+      app: agenda-pessoa
   replicas: 2
   template:
     metadata:
       labels:
-        app: agenda
+        app: agenda-pessoa
     spec:
       containers:
-        - name: agenda
-          image: italoherbert/agenda:latest
+        - name: agenda-pessoa
+          image: italoherbert/agenda-pessoa
           imagePullPolicy: IfNotPresent
-          env:
-            - name: HOST
-              value: localhost
-            - name: DB            
-              value: agenda
-            - name: PORT
-              value: "5432"
-            - name: USERNAME
-              value: italo
-            - name: PASSWORD
-              value: italo
+          envFrom:
+            - configMapRef:
+                name: postgres-config
           ports:        
             - containerPort: 8080
-        - name: postgresql-server-container
-          image: postgres:latest
+        - name: postgresql
+          image: postgres
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:

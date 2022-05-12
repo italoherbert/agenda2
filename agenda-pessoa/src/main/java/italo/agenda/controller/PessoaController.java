@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import italo.agenda.exception.SistemaException;
@@ -29,6 +30,14 @@ public class PessoaController {
 	@Autowired
 	private PessoaValidator pessoaValidator;
 	
+	@GetMapping(value="/registra")
+	public ResponseEntity<Object> registraPessoa( @RequestParam String nome, @RequestParam String salario ) {				
+		PessoaRequest request = new PessoaRequest();
+		request.setNome( nome );
+		request.setSalario( salario );
+		return this.registraPessoa( request ); 
+	}
+	
 	@PostMapping(value="/registra")
 	public ResponseEntity<Object> registraPessoa( @RequestBody PessoaRequest request ) {				
 		try {
@@ -39,7 +48,7 @@ public class PessoaController {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}
 	}
-	
+		
 	@GetMapping(value="/lista")
 	public ResponseEntity<Object> listaPessoas() {
 		try {
