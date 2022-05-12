@@ -1,7 +1,8 @@
 pipeline {
 	agent any
 	
-	stages {		
+	stages {
+		/*
 		stage( 'Inicialização' ) {						
 			steps {
 				script {
@@ -60,7 +61,7 @@ pipeline {
 				sh "docker push italoherbert/agenda-log:latest"
 			}
 		}
-		
+		*/
 		stage( 'Implantação no kubernetes' ) {
 			steps {
 				dir( 'agenda2/kube' ) {
