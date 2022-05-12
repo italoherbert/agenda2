@@ -33,4 +33,4 @@ spec:
           image: italoherbert/agenda-log
           imagePullPolicy: IfNotPresent
           ports:        
-            - containerPort: 8080        
+            - containerPort: 8081        

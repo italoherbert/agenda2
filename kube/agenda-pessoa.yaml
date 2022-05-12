@@ -20,9 +20,9 @@ spec:
     app: agenda-pessoa
   ports:
   - protocol: "TCP"
-    port: 8080
-    targetPort: 8080
-    nodePort: 30000
+    port: 8082
+    targetPort: 8082
+    nodePort: 30002
   type: LoadBalancer
   
 ---
@@ -49,7 +49,7 @@ spec:
             - configMapRef:
                 name: postgres-config
           ports:        
-            - containerPort: 8080
+            - containerPort: 8082
         - name: postgresql
           image: postgres
           imagePullPolicy: IfNotPresent
