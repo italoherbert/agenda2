@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>italo.agendalog</groupId>
-	<artifactId>agendalog</artifactId>
+	<artifactId>agenda-log</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>agenda-log</name>
 	<description>Microserviço de logs da agenda</description>
