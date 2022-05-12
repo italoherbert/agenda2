@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
 	<groupId>italo.agenda</groupId>
-	<artifactId>agenda</artifactId>
+	<artifactId>agenda-pessoa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>agenda-pessoa</name>
 	<description>Projeto agenda pessoa</description>
