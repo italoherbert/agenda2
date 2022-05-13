@@ -2,19 +2,9 @@ spring:
   application:
     name: agenda-log  
   
-  kafka:
-    jaas:
-      enabled: true
-    properties:
-      security:
-        protocol: SASL_PLAINTEXT
-      sasl:
-        mechanism: PLAIN
-        jaas:
-          config: org.apache.kafka.common.security.plain.PlainLoginModule required username="italo" password="italo"; 
-     
+  kafka:    
     consumer:
-      bootstrap-servers: localhost:9093
+      bootstrap-servers: localhost:9092
       group-id: group-id
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
