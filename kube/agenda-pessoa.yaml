@@ -48,6 +48,9 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-config
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: localhost:9092
           ports:        
             - containerPort: 8082
         - name: postgresql

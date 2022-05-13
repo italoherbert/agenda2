@@ -32,5 +32,8 @@ spec:
         - name: agenda-log
           image: italoherbert/agenda-log
           imagePullPolicy: IfNotPresent
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: localhost:9092
           ports:        
             - containerPort: 8081        
