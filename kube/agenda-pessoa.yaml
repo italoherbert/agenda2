@@ -44,13 +44,16 @@ spec:
       containers:
         - name: agenda-pessoa
           image: italoherbert/agenda-pessoa
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: IfNotPresent          
           envFrom:
             - configMapRef:
                 name: postgres-config
           env:
             - name: BOOTSTRAP_SERVERS
               value: localhost:9092
+            - name: POSTGRES_URL
+              value: jdbc:postgresql://localhost:5432/agenda
+            - 
           ports:        
             - containerPort: 8082
         - name: postgresql

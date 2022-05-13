@@ -4,9 +4,9 @@ spring:
     name: agenda-pessoa
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/agenda
-    username: italo
-    password: italo
+    url: ${POSTGRES_URL}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     hikari:
       auto-commit: false   
   jpa: 
