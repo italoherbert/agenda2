@@ -7,8 +7,6 @@ metadata:
 data:
   ZOOKEEPER_SERVER_ID: "1"
   ZOOKEEPER_CLIENT_PORT: "2181"
-  ZOOKEEPER_DATA_DIR: "/var/lib/zookeeper/data"
-  ZOOKEEPER_LOG_DIR: "/var/lib/zookeeper/log"
 
 #  ZOO_ENABLE_AUTH: 'yes'
 #  ZOO_SERVER_USERS: zookeeper
@@ -25,20 +23,23 @@ metadata:
   labels:
     app: kafka
 data:
-  ALLOW_PLAINTEXT_LISTENER: 'yes'
-  ZOOKEEPER_SASL_ENABLED: 'no'
 
-  KAFKA_ZOOKEEPER_CONNECT: 0.0.0.0:2181
-  KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9092,   
+  KAFKA_ZOOKEEPER_CONNECT: localhost:2181
+  KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9092
   KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://kafka:9092
-  KAFKA_PORT: "30092"
+  KAFKA_PORT: "9092"
   
   KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
   KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
 
+  KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+  KAFKA_DELETE_TOPIC_ENABLE: "true"
+
   KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: '1'
   KAFKA_CREATE_TOPICS: 'example-topic:1:1'
 
+# ALLOW_PLAINTEXT_LISTENER: 'yes'
+# ZOOKEEPER_SASL_ENABLED: 'no'
 #  KAFKA_SECURITY_INTER_BROKER_PROTOCOL: PLAINTEXT
 
 #  KAFKA_ZOOKEEPER_PROTOCOL: SASL
@@ -68,7 +69,7 @@ spec:
       port: 29092
       targetPort: 29092
     - name: external
-      port: 30092
+      port: 9092
       targetPort: 9092
       nodePort: 30092
 
@@ -94,6 +95,7 @@ spec:
       containers:    
         - name: zookeeper
           image: zookeeper
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: zookeeper-config
@@ -101,9 +103,15 @@ spec:
             - containerPort: 2181
         - name: kafka
           image: wurstmeister/kafka
+          imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
                 name: kafka-config
+          env:
+            - name: KAFKA_ADVERTISED_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           ports:
             - containerPort: 29092
             - containerPort: 9092

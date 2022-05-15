@@ -34,6 +34,6 @@ spec:
           imagePullPolicy: IfNotPresent
           env:
             - name: BOOTSTRAP_SERVERS
-              value: 192.168.49.2:30092
+              value: 172.17.0.9:9092
           ports:        
             - containerPort: 8081        

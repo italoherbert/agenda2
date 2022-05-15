@@ -17,6 +17,7 @@ public class LogService {
 	
 	@KafkaListener(groupId = "group-id", topics = "example-topic" )
 	public void recebeLogPessoaTopic( String mensagem ) {
+		System.out.println("message = " + mensagem );
 		logsPessoasRegistradas.add( mensagem );
 	}
 	
