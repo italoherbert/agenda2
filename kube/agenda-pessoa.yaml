@@ -13,37 +13,6 @@ data:
 ---
 
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: postgresql-pv
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/volume"
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgresql-pvc
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-
----
-
-apiVersion: v1
 kind: Service
 metadata:
   name: agenda-pessoa
@@ -80,19 +49,19 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-config
+            - configMapRef:
+                name: agenda-kafka-config
           env:
-            - name: BOOTSTRAP_SERVERS
-              value: 172.17.0.9:9092
             - name: POSTGRES_URL
               value: jdbc:postgresql://localhost:5432/agenda            
           ports:        
             - containerPort: 8082
         - name: postgresql
           image: postgres
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: IfNotPresent  
           envFrom:
             - configMapRef:
-                name: postgres-config
+                name: postgres-config        
           ports:
             - containerPort: 5432
           volumeMounts:
@@ -100,5 +69,5 @@ spec:
               mountPath: /var/lib/postgresql/data
       volumes:
         - name: data-volume
-          persistentVolumeClaim:
-            claimName: postgresql-pvc
+          hostPath:
+            path: /data/   

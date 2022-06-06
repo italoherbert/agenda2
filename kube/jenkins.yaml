@@ -48,7 +48,8 @@ spec:
               mountPath: /var/run/docker.sock          
       volumes:
         - name: jenkins-volume
-          emptyDir : {}
+          hostPath:
+            path: /jenkins_home/
         - name: docker-sock-volume
           hostPath:
             path: /var/run/docker.sock

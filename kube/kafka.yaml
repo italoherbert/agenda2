@@ -23,15 +23,9 @@ metadata:
   labels:
     app: kafka
 data:
-
-  KAFKA_ZOOKEEPER_CONNECT: localhost:2181
-  KAFKA_LISTENERS: INTERNAL://:29092,EXTERNAL://:9092
-  KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:29092,EXTERNAL://kafka:9092
-  KAFKA_PORT: "9092"
-  
-  KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-  KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
-
+  KAFKA_ZOOKEEPER_CONNECT: localhost:2181  
+  KAFKA_PORT: "29092"
+    
   KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
   KAFKA_DELETE_TOPIC_ENABLE: "true"
 
@@ -76,7 +70,7 @@ spec:
 ---
 
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: kafka
   labels:
@@ -84,7 +78,8 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: kafka  
+      app: kafka 
+  serviceName: kafka 
   template:
     metadata:
       labels:
@@ -95,7 +90,7 @@ spec:
       containers:    
         - name: zookeeper
           image: zookeeper
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: zookeeper-config
@@ -103,15 +98,23 @@ spec:
             - containerPort: 2181
         - name: kafka
           image: wurstmeister/kafka
-          imagePullPolicy: IfNotPresent
-          envFrom:
-            - configMapRef:
-                name: kafka-config
+          imagePullPolicy: Always
           env:
             - name: KAFKA_ADVERTISED_HOST_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: status.podIP
+                  fieldPath: status.podIP            
+            - name: KAFKA_LISTENERS
+              value: INTERNAL://:29092,EXTERNAL://$(KAFKA_ADVERTISED_HOST_NAME):9092
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: INTERNAL://127.0.0.1:29092,EXTERNAL://$(KAFKA_ADVERTISED_HOST_NAME):9092
+            - name: KAFKA_INTER_BROKER_LISTENER_NAME 
+              value: INTERNAL
+            - name: KAFKA_LISTENER_SECURITY_PROTOCOL_MAP
+              value: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+          envFrom:
+            - configMapRef:
+                name: kafka-config
           ports:
             - containerPort: 29092
             - containerPort: 9092

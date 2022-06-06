@@ -32,8 +32,8 @@ spec:
         - name: agenda-log
           image: italoherbert/agenda-log
           imagePullPolicy: IfNotPresent
-          env:
-            - name: BOOTSTRAP_SERVERS
-              value: 172.17.0.9:9092
+          envFrom:
+            - configMapRef:
+                name: agenda-kafka-config 
           ports:        
             - containerPort: 8081        

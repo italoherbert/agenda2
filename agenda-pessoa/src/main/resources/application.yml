@@ -7,6 +7,9 @@ spring:
     url: ${POSTGRES_URL}
     username: ${POSTGRES_USER}
     password: ${POSTGRES_PASSWORD}
+#    url: jdbc:postgresql://localhost:5432/agenda
+#    username: italo
+#    password: italo
     hikari:
       auto-commit: false   
   jpa: 
@@ -18,6 +21,7 @@ spring:
   kafka:       
     producer:
       bootstrap-servers: ${BOOTSTRAP_SERVERS}
+#      bootstrap-servers: localhost
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: agenda-kafka-config
+  labels:
+    app: agenda-kafka
+data:
+  BOOTSTRAP_SERVERS: 172.17.0.3:9092
