@@ -17,7 +17,7 @@ pipeline {
 			}
 			steps {
 				sh "if [ -d \"agenda2/\" ]; then rm -r agenda2/; fi"
-				sh "git clone https://${GITHUB_CREDENCIAIS_PSW}@github.com/italoherbert/agenda2.git"
+				sh 'git clone https://${GITHUB_CREDENCIAIS_PSW}@github.com/italoherbert/agenda2.git'
 			}
 		}
 

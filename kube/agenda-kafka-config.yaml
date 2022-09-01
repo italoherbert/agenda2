@@ -5,4 +5,4 @@ metadata:
   labels:
     app: agenda-kafka
 data:
-  BOOTSTRAP_SERVERS: 172.17.0.3:9092
+  BOOTSTRAP_SERVERS: 172.17.0.4:9092

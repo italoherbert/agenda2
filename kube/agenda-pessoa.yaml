@@ -8,7 +8,7 @@ data:
   POSTGRES_DB: agenda
   POSTGRES_USER: italo
   POSTGRES_PASSWORD: italo
-  PGDATA: /var/lib/postgresql/data2
+  PGDATA: /opt/agendadata
 
 ---
 
@@ -41,7 +41,11 @@ spec:
     metadata:
       labels:
         app: agenda-pessoa
-    spec:
+    spec:      
+#      initContainers:
+#        - name: init-postgresql
+#          image: busybox:1.28
+#          command: [ 'sh', '-c', 'psql -U italo postgres -c "create database agenda;"' ]
       containers:
         - name: agenda-pessoa
           image: italoherbert/agenda-pessoa
@@ -66,8 +70,8 @@ spec:
             - containerPort: 5432
           volumeMounts:
             - name: data-volume
-              mountPath: /var/lib/postgresql/data
+              mountPath: /opt/agenda-data        
       volumes:
         - name: data-volume
-          hostPath:
-            path: /data/   
+          persistentVolumeClaim:
+            claimName: agenda-pessoa-pvc  
