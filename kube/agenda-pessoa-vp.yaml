@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /mnt/disk/agenda-data  
+    path: /opt/agenda/agenda-pessoa-data  
 
 ---
 
