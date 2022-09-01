@@ -16,7 +16,7 @@ public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
 	@Query("select p from Pessoa p where p.nome=?1 or p.email=?2") 
 	Optional<Pessoa> buscaPorNome( String nome, String email );
 	
-	@Query("select p from Pessoa p where p.salario>=$1")
+	@Query("select p from Pessoa p where p.salario>=?1")
 	List<Pessoa> buscaPorSalario( double salario );
 	
 }
