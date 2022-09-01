@@ -36,4 +36,4 @@ spec:
             - configMapRef:
                 name: agenda-kafka-config 
           ports:        
-            - containerPort: 8081        
+            - containerPort: 8081
