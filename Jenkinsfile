@@ -25,13 +25,11 @@ pipeline {
 			steps {
 				dir( 'agenda2/agenda-pessoa' ) {
 					sh "chmod 777 mvnw"
-					sh "./mvnw dependency:purge-local-repository clean install"
-					sh "./mvnw package -DskipTests"
+					sh "./mvnw clean package -DskipTests"
 				}
 				dir( 'agenda2/agenda-log' ) {
 					sh "chmod 777 mvnw"
-					sh "./mvnw dependency:purge-local-repository clean install"
-					sh "./mvnw package -DskipTests"
+					sh "./mvnw clean package -DskipTests"
 				}
 			}
 		}
