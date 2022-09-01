@@ -31,7 +31,7 @@ public class PessoaController {
 	@Autowired
 	private PessoaValidator pessoaValidator;
 	
-	@GetMapping(value="/registra")
+	@GetMapping(value="/registra", produces = "application/json")
 	public ResponseEntity<Object> registraPessoa( @RequestParam String nome, @RequestParam String salario ) {				
 		PessoaRequest request = new PessoaRequest();
 		request.setNome( nome );
