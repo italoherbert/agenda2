@@ -11,8 +11,15 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /opt/agenda/agenda-pessoa-data  
-
+    path: "/opt/agenda/pessoa-data"
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - minikube
 ---
 
 apiVersion: v1

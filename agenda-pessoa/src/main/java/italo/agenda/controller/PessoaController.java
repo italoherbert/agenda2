@@ -17,6 +17,7 @@ import italo.agenda.exception.SistemaException;
 import italo.agenda.model.request.PessoaRequest;
 import italo.agenda.model.response.ErroResponse;
 import italo.agenda.model.response.PessoaResponse;
+import italo.agenda.model.response.SucessoResponse;
 import italo.agenda.service.PessoaService;
 import italo.agenda.validator.PessoaValidator;
 
@@ -43,7 +44,7 @@ public class PessoaController {
 		try {
 			pessoaValidator.validaSave( request );
 			pessoaService.inserePessoa( request );
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok( new SucessoResponse( "Pessoa inserida com sucesso." ) );
 		} catch (SistemaException e) {
 			return ResponseEntity.badRequest().body( new ErroResponse( e ) );
 		}

@@ -8,7 +8,7 @@ data:
   POSTGRES_DB: agenda
   POSTGRES_USER: italo
   POSTGRES_PASSWORD: italo
-  PGDATA: /opt/agenda/pessoa-data
+# PGDATA: /agenda/pessoa-data
 
 ---
 
@@ -69,9 +69,9 @@ spec:
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgredb
+            - name: agenda-pessoa-db
               mountPath: /var/lib/postgresql/data              
       volumes:
-        - name: postgredb
-          persistentVolumeClaim:
-            claimName: agenda-pessoa-pvc
+        - name: agenda-pessoa-db
+          hostPath:
+            path: /agenda_home/pessoa-data
