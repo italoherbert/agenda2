@@ -75,3 +75,4 @@ spec:
         - name: agenda-pessoa-db
           hostPath:
             path: /agenda_home/pessoa-data
+        
