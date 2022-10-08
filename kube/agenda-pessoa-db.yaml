@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: agenda-pessoa-db
+spec:
+  selector:
+    app: agenda-pessoa-db
+  ports:
+    - port: 5432
+      targetPort: 5432
+  type: LoadBalancer
+#  externalIPs: ["172.31.71.218"]
+  
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: agenda-pessoa-db
+spec:
+  serviceName: agenda-pessoa-db
+  selector:
+    matchLabels:
+      app: agenda-pessoa-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: agenda-pessoa-db
+    spec:      
+#      initContainers:
+#        - name: init-postgresql
+#          image: busybox:1.28
+#          command: [ 'sh', '-c', 'psql -U italo postgres -c "create database agenda;"' ]
+      containers:       
+        - name: postgresql
+          image: postgres
+          imagePullPolicy: IfNotPresent  
+          envFrom:
+            - configMapRef:
+                name: postgres-config  
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata      
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: db-vol
+              mountPath: /var/lib/postgresql/data/
+      volumes:
+#        - name: db-vol
+#          persistentVolumeClaim:
+#            claimName: agenda-pessoa-pvc
+        - name: db-vol
+          hostPath:
+            path: /agenda/pessoa-data/

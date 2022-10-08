@@ -1,18 +1,4 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: postgres-config
-  labels:
-    app: postgres
-data:
-  POSTGRES_DB: agenda
-  POSTGRES_USER: italo
-  POSTGRES_PASSWORD: italo
-# PGDATA: /agenda/pessoa-data
-
----
-
-apiVersion: v1
 kind: Service
 metadata:
   name: agenda-pessoa
@@ -42,10 +28,6 @@ spec:
       labels:
         app: agenda-pessoa
     spec:      
-#      initContainers:
-#        - name: init-postgresql
-#          image: busybox:1.28
-#          command: [ 'sh', '-c', 'psql -U italo postgres -c "create database agenda;"' ]
       containers:
         - name: agenda-pessoa
           image: italoherbert/agenda-pessoa
@@ -57,22 +39,6 @@ spec:
                 name: agenda-kafka-config
           env:
             - name: POSTGRES_URL
-              value: jdbc:postgresql://localhost:5432/agenda            
+              value: jdbc:postgresql://10.103.165.181:5432/agenda            
           ports:        
-            - containerPort: 8082
-        - name: postgresql
-          image: postgres
-          imagePullPolicy: IfNotPresent  
-          envFrom:
-            - configMapRef:
-                name: postgres-config        
-          ports:
-            - containerPort: 5432
-          volumeMounts:
-            - name: agenda-pessoa-db
-              mountPath: /var/lib/postgresql/data              
-      volumes:
-        - name: agenda-pessoa-db
-          hostPath:
-            path: /agenda_home/pessoa-data
-        
+            - containerPort: 8082        

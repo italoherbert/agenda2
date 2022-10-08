@@ -10,16 +10,10 @@ spec:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
   hostPath:
-    path: "/opt/agenda/pessoa-data"
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - minikube
+    path: "/agenda/pessoa-data"
+
 ---
 
 apiVersion: v1
